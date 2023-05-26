@@ -1,0 +1,68 @@
+/* 
+-----------------------------------------------------------------------------
+ Este arquivo contém todos os mixins Sass de escopo global do aplicativo.
+-----------------------------------------------------------------------------
+
+Os Mixins são uma das funcionalidades mais usadas em todo o Sass. São a chave para reutilização de código e
+componentes DRY (DRY significa, em Inglês, Don’t Repeat Yourself. Em português podemos traduzir para “Não te repitas”).
+Os Mixins têm esta caraterística por uma boa razão: eles permitem que o programador defina estilos que podem ser
+reutilizados em todas os ficheiros de estilos, sem precisarem de utilizar classes não semânticas como .float-left.
+*/
+
+/// Wrapper de evento
+/// @author Harry Roberts
+/// @param {Bool} $self [false] - Se deve incluir o seletor atual ou não
+/// @link https://twitter.com/csswizardry/status/478938530342006784 Tweet original de Harry Roberts
+
+/*
+Nesse caso específico, o mixin "clearfix" é usado para lidar com o problema de "floats" em elementos HTML. 
+Quando elementos dentro de um contêiner são flutuados (float), o contêiner pai não reconhece a altura real dos
+elementos flutuantes e pode ter problemas de layout.
+
+O mixin "clearfix" resolve esse problema adicionando um pseudo-elemento (::after) ao elemento pai. O conteúdo do
+pseudo-elemento é definido como vazio (''), e ele é exibido como uma tabela (display: table) e limpa a flutuação
+(clear: both). Isso faz com que o pseudo-elemento "clearfix" seja renderizado após os elementos filhos flutuantes
+e force o elemento pai a ter a altura adequada para envolver seus filhos flutuantes.
+
+Portanto, quando você aplica o mixin "clearfix" a um seletor CSS, ele adiciona automaticamente o 
+pseudo-elemento "::after" com as propriedades necessárias para resolver problemas de layout relacionados à flutuação
+ de elementos.
+*/
+
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin on-event($self: false) {
+  @if $self {
+    &,
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus-within {
+      @content;
+    }
+  } @else {
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus-within {
+      @content;
+    }
+  }
+}
+
+
+
+/// Torna um seletor baseado em contexto um pouco mais amigável
+/// @author Kitty Giraudel
+/// @param {String} $context
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}

@@ -1,0 +1,40 @@
+// -----------------------------------------------------------------------------
+// Este arquivo contém todas as funções Sass de aplicação em toda a aplicação.
+// -----------------------------------------------------------------------------
+
+/* 
+A pasta de /abstracts guarda todas as ferramentas e auxiliares de SASS usados por todo o projeto. 
+Todas as funções globais, mixins e placeholders devem ser colocados nesta pasta.
+
+A regra desta pasta é que não deve produzir uma única linha de CSS se for compilada sozinha. 
+Tudo o que está aqui deverá ser nada mais que auxiliares.
+*/
+
+
+/// Wrapper para a função nativa `url(..)`
+/// @param {String} $base - URL base para o recurso
+/// @param {String} $type - pasta de tipo de recurso (por exemplo, `fonts/`)
+/// @param {String} $path - caminho do recurso
+/// @return {Url}
+
+@function asset($base, $type, $path) {
+  @return url($base + $type + $path);
+}
+
+/// Retorna a URL de uma imagem com base em seu caminho
+/// @param {String} $path - caminho da imagem
+/// @param {String} $base [$base-url] - URL base
+/// @return {Url}
+/// @require $base-url
+@function image($path, $base: $base-url) {
+  @return asset($base, 'images/', $path);
+}
+
+/// Retorna a URL de uma fonte com base em seu caminho
+/// @param {String} $path - caminho da fonte
+/// @param {String} $base [$base-url] - URL base
+/// @return {Url}
+/// @require $base-url
+@function font($path, $base: $base-url) {
+  @return asset($base, 'fonts/', $path);
+}
